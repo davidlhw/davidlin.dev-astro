@@ -8,6 +8,8 @@ export default {
     RSS_FEED: "RSS Feed",
     GITHUB_HOVER: "David on GitHub",
     TWITTER_HOVER: "David on Twitter",
+    MEDIUM_HOVER: "David on Medium",
+    LINKEDIN_HOVER: "David on LinkedIn",
   },
   INTRO: {
     TITLE: "Hello, I'm {{ author }}",

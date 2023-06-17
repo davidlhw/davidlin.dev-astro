@@ -6,16 +6,17 @@
 /* ---------------- brands.bareminimum.css ---------------- */
 :root,
 :host {
-  --fa-style-family-brands: 'Font Awesome 6 Brands';
-  --fa-font-brands: normal 400 1em/1 'Font Awesome 6 Brands';
+  --fa-style-family-brands: "Font Awesome 6 Brands";
+  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
 }
 
 @font-face {
-  font-family: 'Font Awesome 6 Brands';
+  font-family: "Font Awesome 6 Brands";
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype");
+  src: url("../webfonts/fa-brands-400.woff2") format("woff2"),
+    url("../webfonts/fa-brands-400.ttf") format("truetype");
 }
 
 .fab,
@@ -23,11 +24,17 @@
   font-weight: 400;
 }
 
+.fa-linkedin:before {
+  content: "\f08c";
+}
+
+.fa-linkedin-in:before {
+  content: "\f0e1";
+}
 
 .fa-github:before {
   content: "\f09b";
 }
-
 
 .fa-github-alt:before {
   content: "\f113";
@@ -39,6 +46,14 @@
 
 .fa-github-square:before {
   content: "\f092";
+}
+
+.fa-medium:before {
+  content: "\f23a";
+}
+
+.fa-medium-m:before {
+  content: "\f23a";
 }
 
 .fa-twitter:before {
@@ -83,12 +98,12 @@
 .fa-solid,
 .far,
 .fa-regular {
-  font-family: 'Font Awesome 6 Free';
+  font-family: "Font Awesome 6 Free";
 }
 
 .fab,
 .fa-brands {
-  font-family: 'Font Awesome 6 Brands';
+  font-family: "Font Awesome 6 Brands";
 }
 
 .fa-1x {
@@ -178,7 +193,7 @@
   padding-left: 0;
 }
 
-.fa-ul>li {
+.fa-ul > li {
   position: relative;
 }
 
@@ -260,21 +275,22 @@
 
 /* solid.css */
 
- :root,
- :host {
-   --fa-style-family-classic: 'Font Awesome 6 Free';
-   --fa-font-solid: normal 900 1em/1 'Font Awesome 6 Free';
- }
- 
- @font-face {
-   font-family: 'Font Awesome 6 Free';
-   font-style: normal;
-   font-weight: 900;
-   font-display: block;
-   src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
- }
- 
- .fas,
- .fa-solid {
-   font-weight: 900;
- }
+:root,
+:host {
+  --fa-style-family-classic: "Font Awesome 6 Free";
+  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("../webfonts/fa-solid-900.woff2") format("woff2"),
+    url("../webfonts/fa-solid-900.ttf") format("truetype");
+}
+
+.fas,
+.fa-solid {
+  font-weight: 900;
+}
