@@ -1,0 +1,58 @@
+---
+import { readOne, readAll } from "@/lib/markdoc/read";
+import { blog } from "@/lib/markdoc/frontmatter.schema";
+import Renderer from "@/components/Renderer.astro";
+import ContentPageMeta from "@/components/ContentPageMeta.astro";
+import ContentLayout from "@/layouts/ContentLayout.astro";
+import config from "@/config";
+
+export async function getStaticPaths() {
+  const posts = await readAll({
+    directory: config.NAV.BLOG.NAME.toLowerCase(),
+    frontmatterSchema: blog,
+  });
+
+  const filteredPosts = posts
+    .filter((p) =>
+      import.meta.env.MODE !== "production"
+        ? true
+        : p.frontmatter.draft !== true
+    )
+    // we don't want to generate pages for posts that link to external websites
+    .filter(({ frontmatter }) => !frontmatter.external);
+
+  return filteredPosts.map((post) => {
+    return { params: { slug: post.slug } };
+  });
+}
+
+const { slug } = Astro.params;
+if (typeof slug !== "string") {
+  throw Error(`slug should be string. Received: ${slug}`);
+}
+
+const { content, frontmatter } = await readOne({
+  directory: config.NAV.BLOG.NAME.toLowerCase(),
+  slug,
+  frontmatterSchema: blog,
+});
+
+const ogImageAbsoluteUrl =
+  frontmatter.external === false && frontmatter.ogImagePath
+    ? new URL(frontmatter.ogImagePath, config.SITE_URL)
+    : undefined;
+---
+
+<ContentLayout title={frontmatter.title} date={frontmatter.date}>
+  <ContentPageMeta
+    title={frontmatter.title}
+    description={frontmatter.external ? undefined : frontmatter.description}
+    publishDate={frontmatter.date.toISOString()}
+    ogImageAbsoluteUrl={ogImageAbsoluteUrl}
+    pagePath={`/${config.NAV.BLOG.NAME.toLowerCase()}/${slug}`}
+    ogImageWidth={1200}
+    ogImageHeight={630}
+    slot="meta"
+  />
+  <Renderer content={content} slot="content" />
+</ContentLayout>
