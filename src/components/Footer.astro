@@ -1,0 +1,69 @@
+---
+import locale from "@/locale";
+import config from "@/config";
+
+const poweredByFooterHtmlString = locale.en.footer.POWERED_BY.TEXT.replace(
+  "{{ framework }}",
+  `<a
+        class="unset gradient-link tracking-wider font-bold bg-clip-text
+                text-transparent bg-gradient-to-r dark:from-[#f57111] dark:to-[#f79605]
+                from-[#f57111] to-[#f79605]
+                hover:after:bg-gradient-to-r hover:after:from-[#f57111] hover:after:to-[#f79605]"
+        href="${config.FOOTER.FRAMEWORK_LINK}"
+        target="_blank"
+      >${locale.en.footer.POWERED_BY.FRAMEWORK}</a>`
+).replace(
+  "{{ host }}",
+  `<a
+        class="unset gradient-link tracking-wider font-bold bg-clip-text
+                text-transparent bg-gradient-to-r dark:from-[#32e6e2] dark:to-[#8efbf7]
+                from-[#02807d] to-[#04a29f]
+                hover:after:bg-gradient-to-r hover:after:from-[#32e6e2] hover:after:to-[#8efbf7]"
+        href="${config.FOOTER.HOST_LINK}"
+        target="_blank"
+      >${locale.en.footer.POWERED_BY.HOST}</a>`
+);
+
+const authorFooterHtmlString = locale.en.footer.CREDITS.replace(
+  "{{ author }}",
+  config.AUTHOR_NAME
+);
+---
+
+<footer class="text-sm leading-[1.75] m-4">
+  <div set:html={authorFooterHtmlString} />
+  <div set:html={poweredByFooterHtmlString} />
+</footer>
+
+<style>
+  footer {
+    grid-area: footer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gradient-link {
+    position: relative;
+    box-decoration-break: clone;
+    text-decoration: none;
+  }
+
+  .gradient-link:hover:after {
+    transform: translateZ(0) scale(1);
+  }
+
+  .gradient-link:after {
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    content: "";
+    height: 2px;
+    position: absolute;
+    transform: translateZ(0) scaleX(0);
+    transform-origin: left center;
+    transition: all 0.15s ease-in-out;
+  }
+</style>

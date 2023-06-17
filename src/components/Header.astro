@@ -1,0 +1,50 @@
+---
+import config from "@/config";
+import DarkModeToggle from "./DarkModeToggle.astro";
+import Nav from "./Nav.astro";
+import locale from "@/locale";
+---
+
+<header>
+  <Nav />
+  <div
+    class="max-[375px]:hidden justify-self-end py-2 flex items-center content-center text-text-bold"
+  >
+    <a class="unset text-xl ml-4 hover:text-text-link" href="/rss.xml">
+      <i
+        class="fa-solid fa-rss"
+        aria-hidden="true"
+        title={locale.en.landing.NAV.RSS_FEED}></i>
+      <span class="fa-sr-only">{locale.en.landing.NAV.RSS_FEED}</span>
+    </a>
+    <a class="unset text-xl ml-4 hover:text-text-link" href={config.CTA.GITHUB}>
+      <i
+        class="fa-brands fa-github"
+        aria-hidden="true"
+        title={locale.en.landing.NAV.GITHUB_HOVER}></i>
+      <span class="fa-sr-only">{locale.en.landing.NAV.GITHUB_HOVER}</span>
+    </a>
+    <a
+      class="unset text-xl ml-4 hover:text-text-link"
+      href={config.CTA.TWITTER}
+    >
+      <i
+        class="fa-brands fa-twitter"
+        aria-hidden="true"
+        title={locale.en.landing.NAV.TWITTER_HOVER}></i>
+      <span class="fa-sr-only">{locale.en.landing.NAV.TWITTER_HOVER}</span>
+    </a>
+  </div>
+  <DarkModeToggle />
+</header>
+<style>
+  header {
+    grid-area: header;
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(0, max-content) minmax(
+        0,
+        max-content
+      );
+  }
+</style>
