@@ -10,7 +10,7 @@ export default {
   SITE_DESCRIPTION: "Personal portfolio site and DevLogs",
   AUTHOR_NAME: "David Lin",
   PROFILE_IMAGE_REL_PATH: "/images/profile-lowres.png",
-  OG_IMAGE_REL_PATH: "/cover.png",
+  OG_IMAGE_REL_PATH: "/images/cover.png",
   OG_IMAGE_WIDTH: 1200,
   OG_IMAGE_HEIGHT: 630,
   TWITTER_HANDLE: "@davidlhw_",
