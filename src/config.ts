@@ -17,7 +17,7 @@ export default {
   CTA: {
     MEDIUM: "https://medium.com/@davidlhw",
     GITHUB: "https://github.com/DavidLHW",
-    LINKEDIN: "https://www.linkedin.com/in/davidlhw/",
+    LINKEDIN: "https://linkedin.com/in/davidlhw/",
     TWITTER: "https://twitter.com/davidlhw_",
   },
   FOOTER: {

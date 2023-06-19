@@ -15,6 +15,6 @@ export default {
     TITLE: "Hello, I'm {{ author }}",
     DESCRIPTION:
       "Software Engineer based in Singapore. Passionate about building large-scale, real-time, distributed systems.",
-    CTA: "",
+    CTA: "Feel free to reach out to me on {{ linkedin }}!",
   },
 };
