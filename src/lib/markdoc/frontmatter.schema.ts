@@ -58,19 +58,31 @@ export const blog = z.discriminatedUnion("external", [
   }),
 ]);
 
-export const project = baseSchema.extend({
-  external: z.literal(true).default(true),
-  url: z.string({
-    required_error:
-      "external is true but url is missing. projects can only be external urls.",
-    invalid_type_error: "external should be string.",
+export const project = z.discriminatedUnion("external", [
+  // markdown
+  baseSchema.extend({
+    external: z.literal(false),
+    description: z.optional(z.string()),
+    ogImagePath: z.optional(z.string()),
+    canonicalUrl: z.optional(z.string()),
   }),
-});
+  // external link
+  baseSchema.extend({
+    external: z.literal(true),
+    url: z.string({
+      required_error:
+        "external is true but url is missing. projects can only be external urls.",
+      invalid_type_error: "external should be string.",
+    }),
+  }),
+]);
 
 export const notes = z.discriminatedUnion("external", [
   // markdown
   baseSchema.extend({
     external: z.literal(false),
+    description: z.optional(z.string()),
+    ogImagePath: z.optional(z.string()),
   }),
   // external link
   baseSchema.extend({

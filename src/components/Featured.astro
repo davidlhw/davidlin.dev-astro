@@ -10,7 +10,7 @@ const posts = await readAll({
   frontmatterSchema: blog,
 });
 
-const workList = await readAll({
+const projects = await readAll({
   directory: config.NAV.PROJECTS.NAME.toLowerCase(),
   frontmatterSchema: project,
 });
@@ -22,7 +22,7 @@ const notesList = await readAll({
 
 const featuredItems = [
   ...posts.map((p) => ({ ...p, path: config.NAV.BLOG.NAME.toLowerCase() })),
-  ...workList.map((p) => ({
+  ...projects.map((p) => ({
     ...p,
     path: config.NAV.PROJECTS.NAME.toLowerCase(),
   })),
