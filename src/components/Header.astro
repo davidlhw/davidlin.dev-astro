@@ -17,7 +17,11 @@ import locale from "@/locale";
         title={locale.en.landing.NAV.RSS_FEED}></i>
       <span class="fa-sr-only">{locale.en.landing.NAV.RSS_FEED}</span>
     </a>
-    <a class="unset text-xl ml-4 hover:text-text-link" href={config.CTA.GITHUB}>
+    <a
+      class="unset text-xl ml-4 hover:text-text-link"
+      href={config.CTA.GITHUB}
+      target="_blank"
+    >
       <i
         class="fa-brands fa-github"
         aria-hidden="true"
@@ -26,7 +30,8 @@ import locale from "@/locale";
     </a>
     <a
       class="unset text-xl ml-4 hover:text-text-link"
-      href={config.CTA.TWITTER}
+      href={config.CTA.LINKEDIN}
+      target="_blank"
     >
       <i
         class="fa-brands fa-linkedin-in"
@@ -36,7 +41,8 @@ import locale from "@/locale";
     </a>
     <a
       class="unset text-xl ml-4 hover:text-text-link"
-      href={config.CTA.TWITTER}
+      href={config.CTA.MEDIUM}
+      target="_blank"
     >
       <i
         class="fa-brands fa-medium-m"
@@ -47,6 +53,7 @@ import locale from "@/locale";
     <a
       class="unset text-xl ml-4 hover:text-text-link"
       href={config.CTA.TWITTER}
+      target="_blank"
     >
       <i
         class="fa-brands fa-twitter"

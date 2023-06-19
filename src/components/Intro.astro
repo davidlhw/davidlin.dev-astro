@@ -19,6 +19,11 @@ const headLineHtmlStringLight = locale.en.landing.INTRO.TITLE.replace(
             from-[#fde68a] to-[#fde68a]"
     >${config.AUTHOR_NAME.split(" ")[0]}</span>.`
 );
+
+const ctaHtmlString = locale.en.landing.INTRO.CTA.replace(
+  "{{ linkedin }}",
+  `<a href="${config.CTA.LINKEDIN}" target="_blank">linkedin</a>`
+);
 ---
 
 <section class="pt-4 pb-4">
@@ -42,11 +47,7 @@ const headLineHtmlStringLight = locale.en.landing.INTRO.TITLE.replace(
       <p class="pb-4">
         {locale.en.landing.INTRO.DESCRIPTION}
       </p>
-      {
-        locale.en.landing.INTRO.CTA && (
-          <p class="mb-5">{locale.en.landing.INTRO.CTA}</p>
-        )
-      }
+      {ctaHtmlString && <p class="mb-5" set:html={ctaHtmlString} />}
     </div>
 
     <div
