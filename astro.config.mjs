@@ -1,7 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
-import prefetch from "@astrojs/prefetch";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 
@@ -34,6 +33,7 @@ export default defineConfig({
     port: SERVER_PORT,
   },
   site: SITE_URL,
+  prefetch: true,
   integrations: [
     sitemap(),
     tailwind({
@@ -41,7 +41,6 @@ export default defineConfig({
         applyBaseStyles: false,
       },
     }),
-    prefetch(),
     partytown({
       // Adds dataLayer.push as a forwarding-event.
       config: {
