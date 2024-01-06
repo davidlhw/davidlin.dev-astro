@@ -2,7 +2,7 @@ import type { z } from "zod";
 import path from "path";
 import matter from "gray-matter";
 import fs from "fs/promises";
-import { globby } from "globby";
+import { glob } from "glob";
 import Markdoc from "@markdoc/markdoc";
 import { config } from "./markdoc.config";
 
@@ -58,13 +58,7 @@ export async function read<T extends z.ZodTypeAny>({
     schema,
     filepath,
   });
-
-  const filename = filepath.split("/").pop();
-  if (typeof filename !== "string") {
-    throw new Error("Check what went wrong");
-  }
-  const fileNameWithoutExtension = filename.replace(/\.[^.]*$/, "");
-
+  const fileNameWithoutExtension = path.parse(filepath).name;
   return {
     slug: fileNameWithoutExtension,
     content: transformedContent,
@@ -96,7 +90,6 @@ export async function readAll<T extends z.ZodTypeAny>({
   frontmatterSchema: T;
 }) {
   // somehow `path.join(contentDirectory, directory, "*.md")` doesnt want to work here
-  const paths = await globby(`${contentDirectory}/${directory}/*.md`);
-
+  const paths = await glob(`${contentDirectory}/${directory}/*.md`);
   return Promise.all(paths.map((path) => read({ filepath: path, schema })));
 }
