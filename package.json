@@ -8,29 +8,33 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "sync": "astro sync",
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@astrojs/mdx": "^2.2.2",
     "@astrojs/partytown": "^2.0.3",
-    "@astrojs/prism": "^3.0.0",
     "@astrojs/rss": "^4.0.1",
     "@astrojs/sitemap": "^3.0.4",
     "@astrojs/tailwind": "^5.1.0",
-    "@markdoc/markdoc": "^0.4.0",
+    "@expressive-code/plugin-collapsible-sections": "^0.33.5",
+    "@expressive-code/plugin-line-numbers": "^0.33.5",
     "@tailwindcss/typography": "^0.5.10",
     "astro": "^4.1.1",
-    "astro-markdoc-renderer": "0.0.1-alpha.1",
+    "astro-expressive-code": "^0.33.5",
     "autoprefixer": "^10.4.16",
-    "glob": "^10.3.10",
-    "gray-matter": "^4.0.3",
+    "hastscript": "^9.0.0",
     "postcss": "^8.4.33",
     "slugify": "^1.6.6",
     "tailwindcss": "^3.4.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@shikijs/transformers": "^1.2.1",
     "prettier-plugin-astro": "^0.12.3",
     "typescript": "^5.3.3"
   },
-  "packageManager": "yarn@4.0.2"
+  "peerDependencies": {
+    "@expressive-code/core": "^0.33.5"
+  }
 }
