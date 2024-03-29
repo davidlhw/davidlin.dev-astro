@@ -1,0 +1,22 @@
+---
+external: false
+title: Dual Write Problem (Distributed Systems)
+description: In event driven architecture, when performing 2 separate write operations such as updating a state then emitting a success event, there is a chance for failure to occur in between those 2 events causing inconsistencies in the system.
+# ogImagePath:
+date: 2024-01-17
+featured: true
+---
+
+In event driven architecture, when performing 2 separate write operations such as updating a state then emitting a success event, there is a chance for failure to occur in between those 2 events causing inconsistencies in the system
+
+This is often called the Dual Write Problem and is well addressed in this short vid by confluent.io, the company behind a new kafka
+
+<iframe
+  class="aspect-video w-full"
+  src="https://www.youtube.com/embed/FpLXCBr7ucA?si=jStm0cnX5FvPdIkH"
+  title="Dual Write Problem (Distributed Systems)r"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>

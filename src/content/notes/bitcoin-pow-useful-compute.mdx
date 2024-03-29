@@ -1,0 +1,53 @@
+---
+external: false
+title: Why doesn't Bitcoin use Proof-of-Work for something meaningful?
+description: Bitcoin's proof-of-work performs more or less meaningless hashing computation, why not let it do something meaningful instead as a proof-of-work?
+# ogImagePath:
+date: 2024-03-09
+featured: true
+---
+
+I was watching a video from Veritasium on the "oldest unsolved problem in math" or the Problem of [Mersenne Primes](https://en.wikipedia.org/wiki/Mersenne_prime).
+
+<iframe
+  class="aspect-video w-full"
+  src="https://www.youtube.com/embed/Zrv1EDIqHkY?si=bItw8KXnPxMeEjhs"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
+
+In the video, Derek mentioned that George Woltman, a computer scientist, launched a program (https://youtu.be/Zrv1EDIqHkY?t=1133) (GIMPS) to crowdsource computing resources to help solve the Mersenne Prime problem.
+
+Then I thought, "bitcoin's proof-of-work performs more or less meaningless hashing computation, why not let it do something meaningful instead as a proof-of-work?"
+
+Funnily enough, a quick google search revealed that I wasn't the first to have this question (the power of the internet!)
+
+> It's a shame that bitcoin proof of work can't be doing something productive, like mersenne primes, etc.
+>
+> ["Why can't bitcoin proof-of-work be productive?"](https://www.reddit.com/r/compsci/comments/4748aq) - u/laika-in-space (Reddit)
+
+To which another redditor replied:
+
+> 1. It must require a significant amount of work to find an "answer".
+> 2. But it must also be very cheap for everyone else to verify that the answer is correct once it's found so they can verify that the work was actually done.
+> 3. Since it's a race every few minutes to find the next winning answer there has to be way for the winner to be random based on the amount of compute they're doing so the reward is shared fairly.
+> 4. The amount of work required has to be variable so the "difficulty" can be adjusted as the network increases in size and miners get faster.
+
+Which just means that the Primality test that will help progress the Mersenne Problem, as an example of useful work, won't be necessarily be reliable / helpful since it's inherently an [NP problem](<https://en.wikipedia.org/wiki/NP_(complexity)>) that is not [NP-complete](https://en.wikipedia.org/wiki/NP-completeness) and takes longer to verify with certainty than to generate one with probabilistic tests, which is not ideal for a PoW blockchain.
+
+See also [u/cgibbard's comment](https://www.reddit.com/r/compsci/comments/4748aq/comment/d0adr7a/):
+
+> It's (comparatively) not hard to find good candidate numbers by way of probabilistic primality tests. These can quickly exclude numbers as definitely composite, but will, with some low probability, fail to detect a composite number on some run of the test. So typically almost all the work involved in finding a prime number at a given scale is actually checking that it is indeed prime.
+>
+> So unless you get the workers to submit some form of proof along with the prime which can be used to check primality more quickly the second time around, just submitting the prime itself isn't really going to fly -- you can fake that very well much more easily than actually doing the work.
+>
+> There are however, mechanisms which can produce a certificate of primality in the case that a number really is prime, which can be used to re-verify the proof that it's prime more quickly than finding that proof, but the certificates obtained that way can be fairly large compared to the numbers involved (in terms of bytes). Even ignoring (3) and (4), I don't know how practical it would be to use that.
+>
+> For example, it took my computer 0.017 seconds to guess that
+>
+> 327339(...snipped 139 random digits...)589431
+>
+> is the first prime number after 2500 (about 167 bytes). When I say "guess", this was actually using a deterministic test which is known to have rare cases where it fails, but an actual probabilistic test would be similarly quick. It then took about 16 seconds to actually prove that it was prime, and the certificate generated is about 5.5 kilobytes once gzipped (17 kilobytes uncompressed). Checking that the certificate is good takes about half a second.
