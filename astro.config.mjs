@@ -2,7 +2,12 @@
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
+import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
+import expressiveCode from "astro-expressive-code";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginErrorPreview } from "./src/lib/ec/plugins/plugin-error-preview";
 
 /* 
   We are doing some URL mumbo jumbo here to tell Astro what the URL of your website will be.
@@ -47,5 +52,20 @@ export default defineConfig({
         forward: ["dataLayer.push"],
       },
     }),
+    expressiveCode({
+      plugins: [
+        pluginLineNumbers(),
+        pluginCollapsibleSections(),
+        pluginErrorPreview(),
+      ],
+      themes: ["one-dark-pro", "github-light"],
+      styleOverrides: {
+        codeFontFamily: "JetBrains Mono",
+        uiFontFamily: "JetBrains Mono",
+      },
+      useDarkModeMediaQuery: true,
+      themeCssSelector: (theme) => `[data-theme="${theme.type}"]`,
+    }),
+    mdx(),
   ],
 });
