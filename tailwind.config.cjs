@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.astro"],
-  darkMode: "class",
+  darkMode: ["selector", '[data-theme="dark"]'],
   theme: {
     extend: {
       fontFamily: {
-        body: ["Inconsolata", "sans-serif"],
-        heading: ["Nunito", "sans-serif"],
+        body: ["IBM Plex Mono", "monospace"],
+        heading: ["Red Hat Display", "sans-serif"],
       },
       colors: {
         transparent: "transparent",
@@ -78,12 +78,6 @@ module.exports = {
             },
             "h3, h4, h5": {
               "font-weight": "500",
-            },
-            "code::before": {
-              content: "none",
-            },
-            "code::after": {
-              content: "none",
             },
             blockquote: {
               border: "none",
