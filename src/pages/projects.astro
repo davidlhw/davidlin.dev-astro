@@ -1,22 +1,16 @@
 ---
-import { readAll } from "@/lib/markdoc/read";
-import { project } from "@/lib/markdoc/frontmatter.schema";
 import PageLayout from "@/layouts/PageLayout.astro";
 import PageMeta from "@/components/PageMeta.astro";
 import Label from "@/components/Label.astro";
 import config from "@/config";
+import { getCollection } from "astro:content";
 
-const workList = await readAll({
-  directory: config.NAV.PROJECTS.NAME.toLowerCase(),
-  frontmatterSchema: project,
-});
+const workList = await getCollection("projects");
 
 const sortedWork = workList
-  .filter((p) => p.frontmatter.draft !== true)
+  .filter((p) => !(import.meta.env.MODE === "production" && p.data.draft))
   .sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).valueOf() -
-      new Date(a.frontmatter.date).valueOf()
+    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
   );
 ---
 
@@ -35,35 +29,46 @@ const sortedWork = workList
     <ul>
       {
         sortedWork.map((project) => {
-          const formattedDate = new Date(
-            project.frontmatter.date
-          ).toLocaleDateString("en-us", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          });
+          const formattedDate = new Date(project.data.date).toLocaleDateString(
+            "en-us",
+            {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            }
+          );
           return (
             <li class="grid grid-cols-[1fr] md:grid-cols-[1fr_auto] mb-3 md:gap-2 items-start">
               <div class="title">
-                <a
-                  href={project.frontmatter.url}
-                  target="_blank"
-                  class="unset hover:text-text-link"
-                  rel="prefetch"
-                >
-                  <span>{project.frontmatter.title}</span>
-                  <span>
-                    <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
-                  </span>
-                  {project.frontmatter.label ? (
-                    <Label label={project.frontmatter.label}>
-                      {project.frontmatter.label}
-                    </Label>
-                  ) : null}
-                </a>
+                {project.data.external ? (
+                  <a
+                    href={project.data.url}
+                    target="_blank"
+                    class="unset hover:text-text-link"
+                    rel="prefetch"
+                  >
+                    <span>{project.data.title}</span>
+                    <span>
+                      <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
+                    </span>
+                    {project.data.label ? (
+                      <Label label={project.data.label}>
+                        {project.data.label}
+                      </Label>
+                    ) : null}
+                  </a>
+                ) : (
+                  <a
+                    href={`${config.NAV.PROJECTS.REL_PATH}/${project.slug}`}
+                    class="unset hover:text-text-link"
+                    rel="prefetch"
+                  >
+                    {project.data.title}
+                  </a>
+                )}
               </div>
               <div class="text-text-muted text-sm italic pt-1">
-                <time datetime={project.frontmatter.date.toISOString()}>
+                <time datetime={project.data.date.toISOString()}>
                   {formattedDate}
                 </time>
               </div>

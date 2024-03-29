@@ -1,24 +1,15 @@
 import rss from "@astrojs/rss";
-import { blog } from "@/lib/markdoc/frontmatter.schema";
-import { readAll } from "@/lib/markdoc/read";
 import config from "@/config";
+import { getCollection } from "astro:content";
 
-export const get = async () => {
-  const posts = await readAll({
-    directory: config.NAV.BLOG.NAME.toLowerCase(),
-    frontmatterSchema: blog,
-  });
+export const GET = async () => {
+  const posts = await getCollection("blog");
 
   const sortedPosts = posts
-    .filter((p) =>
-      import.meta.env.MODE !== "production"
-        ? true
-        : p.frontmatter.draft !== true
-    )
+    .filter((p) => !(import.meta.env.MODE === "production" && p.data.draft))
     .sort(
       (a, b) =>
-        new Date(b.frontmatter.date).valueOf() -
-        new Date(a.frontmatter.date).valueOf()
+        new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
     );
 
   let baseUrl = config.SITE_URL;
@@ -26,11 +17,11 @@ export const get = async () => {
   // https://example.com/ => https://example.com
   baseUrl = baseUrl.replace(/\/+$/g, "");
 
-  const rssItems = sortedPosts.map(({ frontmatter, slug }) => {
-    if (frontmatter.external) {
-      const title = frontmatter.title;
-      const pubDate = frontmatter.date;
-      const link = frontmatter.url;
+  const rssItems = sortedPosts.map(({ data, slug }) => {
+    if (data.external) {
+      const title = data.title;
+      const pubDate = data.date;
+      const link = data.url;
 
       return {
         title,
@@ -39,10 +30,10 @@ export const get = async () => {
       };
     }
 
-    const title = frontmatter.title;
-    const pubDate = frontmatter.date;
-    const description = frontmatter.description;
-    const link = `${baseUrl}/blog/${slug}`;
+    const title = data.title;
+    const pubDate = data.date;
+    const description = data.description;
+    const link = `${baseUrl}${config.NAV.BLOG.REL_PATH}/${slug}`;
 
     return {
       title,

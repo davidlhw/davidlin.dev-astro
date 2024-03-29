@@ -1,6 +1,6 @@
 ---
 import type { z } from "zod";
-import type { label as labelEnum } from "@/lib/markdoc/frontmatter.schema";
+import type { label as labelEnum } from "@/content/config";
 
 type LabelEnum = z.infer<typeof labelEnum>;
 
@@ -39,7 +39,7 @@ const colorClass: Record<NonNullable<LabelEnum>, string> = {
 ---
 
 {
-  label ? (
+  label && (
     <span
       class={`text-[0.625rem] align-middle inline-block ${colorClass[label]}
          bg-opacity-50 dark:bg-opacity-[0.5] rounded-sm px-1 font-medium
@@ -47,5 +47,5 @@ const colorClass: Record<NonNullable<LabelEnum>, string> = {
     >
       {displayText[label]}
     </span>
-  ) : null
+  )
 }

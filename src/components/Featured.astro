@@ -1,44 +1,28 @@
 ---
-import { readAll } from "@/lib/markdoc/read";
-import { blog, project, notes } from "@/lib/markdoc/frontmatter.schema";
 import Label from "./Label.astro";
 import locale from "@/locale";
 import config from "@/config";
+import { getCollection } from "astro:content";
 
-const posts = await readAll({
-  directory: config.NAV.BLOG.NAME.toLowerCase(),
-  frontmatterSchema: blog,
-});
-
-const projects = await readAll({
-  directory: config.NAV.PROJECTS.NAME.toLowerCase(),
-  frontmatterSchema: project,
-});
-
-const notesList = await readAll({
-  directory: config.NAV.NOTES.NAME.toLowerCase(),
-  frontmatterSchema: notes,
-});
+const posts = await getCollection("blog");
+const projects = await getCollection("projects");
+const notes = await getCollection("notes");
 
 const featuredItems = [
-  ...posts.map((p) => ({ ...p, path: config.NAV.BLOG.NAME.toLowerCase() })),
-  ...projects.map((p) => ({
-    ...p,
+  ...posts.map((e) => ({ ...e, path: config.NAV.BLOG.NAME.toLowerCase() })),
+  ...projects.map((e) => ({
+    ...e,
     path: config.NAV.PROJECTS.NAME.toLowerCase(),
   })),
-  ...notesList.map((p) => ({
-    ...p,
+  ...notes.map((e) => ({
+    ...e,
     path: config.NAV.NOTES.NAME.toLowerCase(),
   })),
 ]
-  .filter((p) =>
-    import.meta.env.MODE !== "production" ? true : p.frontmatter.draft !== true
-  )
-  .filter((p) => p.frontmatter.featured === true)
+  .filter((e) => !(import.meta.env.MODE === "production" && e.data.draft))
+  .filter((e) => e.data.featured)
   .sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).valueOf() -
-      new Date(a.frontmatter.date).valueOf()
+    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
   );
 ---
 
@@ -49,30 +33,29 @@ const featuredItems = [
   <ul>
     {
       featuredItems.map((item) => {
-        const formattedDate = new Date(
-          item.frontmatter.date
-        ).toLocaleDateString("en-us", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        });
+        const formattedDate = new Date(item.data.date).toLocaleDateString(
+          "en-us",
+          {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }
+        );
         return (
           <li class="grid grid-cols-[1fr] md:grid-cols-[1fr_auto] mb-3 md:gap-2 items-start">
             <div class="title">
-              {item.frontmatter?.external ? (
+              {item.data.external ? (
                 <a
-                  href={item.frontmatter.url}
+                  href={item.data.url}
                   target="_blank"
                   class="unset hover:text-text-link"
                 >
-                  <span>{item.frontmatter.title}</span>
+                  <span>{item.data.title}</span>
                   <span>
                     <i class="ml-1 mr-1 text-[12px] pb-2 fa-solid fa-up-right-from-square" />
                   </span>
-                  {item.frontmatter.label ? (
-                    <Label label={item.frontmatter.label}>
-                      {item.frontmatter.label}
-                    </Label>
+                  {item.data.label ? (
+                    <Label label={item.data.label}>{item.data.label}</Label>
                   ) : null}
                 </a>
               ) : (
@@ -81,12 +64,12 @@ const featuredItems = [
                   class="unset hover:text-text-link"
                   rel="prefetch"
                 >
-                  {item.frontmatter.title}
+                  {item.data.title}
                 </a>
               )}
             </div>
             <div class="text-text-muted text-sm italic pt-1">
-              <time datetime={item.frontmatter.date.toISOString()}>
+              <time datetime={item.data.date.toISOString()}>
                 {formattedDate}
               </time>
             </div>
