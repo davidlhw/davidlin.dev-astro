@@ -65,6 +65,17 @@ export default defineConfig({
       },
       useDarkModeMediaQuery: true,
       themeCssSelector: (theme) => `[data-theme="${theme.type}"]`,
+      defaultProps: {
+        // Disable line numbers by default
+        showLineNumbers: true,
+        // But enable line numbers for certain languages
+        overridesByLang: {
+          "ansi,bash,bat,batch,cmd,console,powershell,ps,ps1,psd1,psm1,sh,shell,shellscript,shellsession,zsh":
+            {
+              showLineNumbers: false,
+            },
+        },
+      },
     }),
     mdx(),
   ],
